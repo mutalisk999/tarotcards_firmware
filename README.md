@@ -94,7 +94,7 @@ Provenance and licenses are recorded in the
 
 ## Hardware
 
-| | |
+| Item | Specification |
 | --- | --- |
 | Target | ESP32-C3, 8 MB flash, no PSRAM |
 | Display | 240 × 320 portrait, ST7789P3 over SPI |
