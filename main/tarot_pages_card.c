@@ -84,9 +84,9 @@ static void card_refresh(struct tarot_app_s *app) {
 
 static void card_build(struct tarot_app_s *app) {
     if (!ensure_valid(app)) return;
-    if (app->card_index < 0 || app->card_index >= app->draw_count) {
-        app->card_index = 0;
-    }
+    // 每次解读固定从 过去 → 现在 → 未来 开始:解读页只在洗牌
+    // 全部翻开后进入,card_index 不沿用上一次占卜的浏览位置。
+    app->card_index = 0;
     app->screen = tarot_page_create("牌面解读");
 
     // 三牌阵:位置页签行(单张隐藏),置于右列顶端,避让左侧 120px 宽的牌面。
