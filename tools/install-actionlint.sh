@@ -10,6 +10,14 @@ if [[ -x "${destination}/actionlint" ]]; then
     printf '%s\n' "${destination}/actionlint"
     exit 0
 fi
+if [[ -x "${destination}/actionlint.exe" ]]; then
+    printf '%s\n' "${destination}/actionlint.exe"
+    exit 0
+fi
+
+# Windows(Git Bash)与 POSIX 平台的产物名不同。
+binary_name="actionlint"
+archive_ext="tar.gz"
 
 case "${system_name}/${machine_name}" in
     Linux/x86_64)
@@ -28,13 +36,19 @@ case "${system_name}/${machine_name}" in
         platform="darwin_arm64"
         checksum="aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f"
         ;;
+    MINGW*/x86_64|Windows*/x86_64)
+        platform="windows_amd64"
+        checksum="6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9"
+        archive_ext="zip"
+        binary_name="actionlint.exe"
+        ;;
     *)
         echo "Unsupported actionlint platform: ${system_name}/${machine_name}" >&2
         exit 1
         ;;
 esac
 
-archive_name="actionlint_${version}_${platform}.tar.gz"
+archive_name="actionlint_${version}_${platform}.${archive_ext}"
 archive_path="${destination}/${archive_name}"
 download_url="https://github.com/rhysd/actionlint/releases/download/v${version}/${archive_name}"
 
@@ -57,6 +71,11 @@ else
     echo "No SHA-256 verification tool is available" >&2
     exit 1
 fi
-tar -xzf "${archive_path}" -C "${destination}" actionlint
-chmod +x "${destination}/actionlint"
-printf '%s\n' "${destination}/actionlint"
+if [[ "${archive_ext}" == "zip" ]]; then
+    # Git Bash 的 GNU tar 不解 zip;unzip 在 MSYS 环境默认可用。
+    unzip -o -q "${archive_path}" -d "${destination}" "${binary_name}"
+else
+    tar -xzf "${archive_path}" -C "${destination}" actionlint
+fi
+chmod +x "${destination}/${binary_name}"
+printf '%s\n' "${destination}/${binary_name}"

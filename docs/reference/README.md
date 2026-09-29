@@ -64,6 +64,12 @@ The engineering rules themselves live under
 
 - [Offline Pokédex](sunny0826/offline-pokedex/README.md) — a fully offline Pokédex that embeds all 1,025 Pokémon, their sprites, and cries in the firmware.
 
+### mutalisk999
+
+**Application playbooks:**
+
+- [Tarot Divination](mutalisk999/tarot-divination/README.md) — a full 78-card Rider-Waite-Smith tarot reader with single and three-card spreads, true upside-down reversals, and the complete 1909 public-domain artwork embedded at two resolutions.
+
 ## Adding an experience entry
 
 Each release may produce **one or more** reusable, post-release learnings; each is

@@ -55,7 +55,13 @@
 
 **应用档案：**
 
-- [离线宝可梦图鉴](sunny0826/offline-pokedex/README.zh_CN.md) — 把全部 1025 只宝可梦与精灵、叫声内嵌固件的全离线图鉴。
+- [离线宝可梦图鉴](sunny0826/offline-pokedex/README.zh_CN.md) — 把全部 1025 只宝可梦、贴图与叫声嵌入固件的完全离线图鉴。
+
+### mutalisk999
+
+**应用档案：**
+
+- [塔罗占卜](mutalisk999/tarot-divination/README.zh_CN.md) — 78 张完整韦特塔罗，单张与三牌阵、真实倒置的逆位牌面，两档分辨率嵌入 1909 年公有领域全套牌面。
 
 ## 新增经验条目
 
