@@ -29,6 +29,20 @@ class InstallPassportSkillsTest(unittest.TestCase):
         temporary = tempfile.TemporaryDirectory(prefix="ai-passport-skill-tests-")
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name).resolve()
+        # These tests install real directory symlinks; skip where the OS
+        # denies the privilege (Windows without Developer Mode), consistent
+        # with the symlink() helper below and the check_repo suite.
+        probe = self.root / ".symlink-probe"
+        try:
+            probe.symlink_to(self.root, target_is_directory=True)
+        except NotImplementedError:
+            self.skipTest("This platform does not support symlinks")
+        except OSError as error:
+            if getattr(error, "winerror", None) == 1314:
+                self.skipTest("Windows symlink tests require Developer Mode or elevation")
+            raise
+        finally:
+            probe.unlink(missing_ok=True)
         root_patch = patch.object(INSTALLER, "ROOT", self.root)
         root_patch.start()
         self.addCleanup(root_patch.stop)

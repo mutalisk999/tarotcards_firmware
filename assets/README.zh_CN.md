@@ -15,7 +15,24 @@
 - 添加字库前评估 Flash 与内部 RAM 影响；ESP32-C3 无 PSRAM。
 - 不提交许可不允许分发的字库。
 
+| 文件 | 大小与覆盖 | 用途、来源与许可 |
+| --- | --- | --- |
+| [`fonts/NotoSansSC-Regular.otf`](fonts/NotoSansSC-Regular.otf) | Noto Sans SC Regular，SC 子集 OpenType/CFF | 塔罗应用字库子集的源字体。来源：[notofonts/noto-cjk](https://github.com/notofonts/noto-cjk)（`Sans/SubsetOTF/SC`），SIL Open Font License 1.1，可再分发。 |
+| [`fonts/tarot-symbols.txt`](fonts/tarot-symbols.txt) | 塔罗 UI 的唯一字符清单（ASCII + 约 1100 个 CJK） | 由 [`tools/gen_tarot_font_symbols.py`](../tools/gen_tarot_font_symbols.py) 从应用源码生成；是 16/24px 子集的覆盖契约，由 `tests/test_tarot_font_contract.py` 校验。清单变化时须重新生成字库。 |
+| [`fonts/tarot-symbols-cover.txt`](fonts/tarot-symbols-cover.txt) | 仅封面大字（"塔罗"） | 48px 封面子集的输入。 |
+| [`fonts/tarot_font_16.c`](fonts/tarot_font_16.c)、[`fonts/tarot_font_24.c`](fonts/tarot_font_24.c)、[`fonts/tarot_font_48.c`](fonts/tarot_font_48.c) | LVGL C 源码，4bpp，未压缩（源码约 0.96 MB / 1.87 MB / 14 KB） | 应用字体 `tarot_font_16` / `tarot_font_24` / `tarot_font_48`（正文 / 标题与牌名 / 封面），由 [`tools/gen_tarot_fonts.sh`](../tools/gen_tarot_fonts.sh)（`lv_font_conv`，`--no-compress`）生成，经 `main/CMakeLists.txt` 编入 `main`。使用 `LV_FONT_DECLARE` + `lv_obj_set_style_text_font` 显式选用。 |
+
+再生成流程：修改 UI 文案 → `python tools/gen_tarot_font_symbols.py` →
+`./tools/gen_tarot_fonts.sh`（需要 `node`/`npx`）→ 重新构建固件。48px 子集
+刻意只覆盖封面标题；其他字号显示的文案必须落在 `tarot-symbols.txt` 内。
+
 ## 图片（images）
+
+可复用的源图与生成的显示资产放在 `images/`。
+
+| 文件 | 尺寸与格式 | 用途与来源 |
+| --- | --- | --- |
+| [`images/tarot_art.h`](images/tarot_art.h)、[`images/tarot_art_img.c`](images/tarot_art_img.c)、[`images/tarot_art_mini.c`](images/tarot_art_mini.c) | 78 张 × 2 套：120 × 180 + 64 × 96 RGB565（约 4.2 MiB Flash） | 塔罗应用嵌入的 Rider-Waite-Smith（1909，Pamela Colman Smith）牌面图，公有领域；扫描件来自 [searge/tarot](https://github.com/searge/tarot)（`assets/img/big`，JPEG 源不入库）。由 [`tools/gen_tarot_art.py`](../tools/gen_tarot_art.py) 生成（`--fetch` 下载源图、默认转换、`--check` 校验），经 `main/CMakeLists.txt` 编入 `main`；由 `main/tarot_art.c` 消费，逆位通过行翻转渲染进静态 RAM 缓冲（本板无法缩放图片，故每种显示尺寸各生成一套 1:1 图）。修改 `WIDTH`/`HEIGHT` 或源图集后须重新生成。 |
 
 可复用的源图与生成的显示资产放在 `images/`。
 
