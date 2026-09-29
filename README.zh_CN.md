@@ -5,12 +5,7 @@
 <h1 align="center">塔罗占卜</h1>
 
 <p align="center">
-  完整的韦特塔罗——78 张牌、三个按键、一副口袋牌库。<br>
-  <a href="docs/README.zh_CN.md">FoloToy AI Passport</a> 开源可穿戴平台应用。
-</p>
-
-<p align="center">
-  <img src="assets/images/home.jpg" alt="FoloToy AI Passport 可穿戴设备正面、侧面与背面。" width="100%">
+  完整的韦特塔罗——78 张牌、三个按键、一副口袋牌库。
 </p>
 
 ## 这是什么

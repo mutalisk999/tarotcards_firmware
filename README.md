@@ -5,12 +5,7 @@
 <h1 align="center">Tarot Divination</h1>
 
 <p align="center">
-  The complete Rider-Waite-Smith tarot — 78 cards, three keys, one pocket deck.<br>
-  An application for the <a href="docs/README.md">FoloToy AI Passport</a> open wearable.
-</p>
-
-<p align="center">
-  <img src="assets/images/home.jpg" alt="FoloToy AI Passport wearable device shown from the front, side, and back." width="100%">
+  The complete Rider-Waite-Smith tarot — 78 cards, three keys, one pocket deck.
 </p>
 
 ## What it is
